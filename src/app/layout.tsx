@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import ClientProvider from "./components/ClientOnly";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const myFont = localFont({
+  src: [
+    {
+      path: "../../public/fonts/dana-medium.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-myfont",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,8 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html
+      lang="fa"
+      dir="rtl"
+      suppressHydrationWarning
+      className={myFont.variable}
+    >
+      <body className={` ${myFont.variable} antialiased`}>
         <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
