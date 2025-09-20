@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Left Image */}
           <div className="hidden lg:block">
             <img
-              src="/images/image 3.png"
+              src="/images/image 3.webp"
               alt="مرد با کت نارنجی"
               className="w-96 h-[576px] object-contain"
             />
@@ -55,7 +55,7 @@ export default function Footer() {
             {/* Logo */}
             <div className="order-2 md:order-1">
               <Link href="/" className="text-2xl font-bold text-gray-800">
-                FASCO
+                TINKO
               </Link>
             </div>
 
