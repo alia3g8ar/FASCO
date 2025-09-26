@@ -59,21 +59,32 @@ export default function HeroCarousel() {
     }),
   };
 
-  const [date, setDate] = useState(new Date());
-
   useEffect(() => {
-    const interval = setInterval(() => setDate(new Date()), 1000);
+    const interval = setInterval(() => {}, 1000);
     return () => clearInterval(interval);
   }, []);
 
   // محاسبه شمارش معکوس تا پایان ماه
   const now = new Date();
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59
+  );
   const timeDiff = endOfMonth.getTime() - now.getTime();
-  
+
   const days = Math.max(0, Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
-  const hours = Math.max(0, Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-  const minutes = Math.max(0, Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
+  const hours = Math.max(
+    0,
+    Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  );
+  const minutes = Math.max(
+    0,
+    Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60))
+  );
   const seconds = Math.max(0, Math.floor((timeDiff % (1000 * 60)) / 1000));
 
   const counter = [
