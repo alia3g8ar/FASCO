@@ -1,18 +1,16 @@
 // components/HeroCarousel.tsx
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import type { StaticImageData } from "next/image";
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import w1 from "../../public/assets/deals/w1.png";
-import w2 from "../../public/assets/deals/w2.png";
-import w3 from "../../public/assets/deals/w3.png";
+// استفاده از تصاویر از پوشه public
+const w1 = "/assets/deals/w1.png";
+const w2 = "/assets/deals/w2.png";
+const w3 = "/assets/deals/w3.png";
 
 interface Slide {
   id: number;
-  image: StaticImageData;
+  image: string;
   title: string;
   discount: string;
 }
@@ -68,16 +66,21 @@ export default function HeroCarousel() {
     return () => clearInterval(interval);
   }, []);
 
-  const day = date.getDay();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const sec = date.getSeconds();
+  // محاسبه شمارش معکوس تا پایان ماه
+  const now = new Date();
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+  const timeDiff = endOfMonth.getTime() - now.getTime();
+  
+  const days = Math.max(0, Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
+  const hours = Math.max(0, Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+  const minutes = Math.max(0, Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)));
+  const seconds = Math.max(0, Math.floor((timeDiff % (1000 * 60)) / 1000));
 
   const counter = [
-    { type: "روز", value: day },
-    { type: "ساعت", value: hour },
-    { type: "دقیقه", value: minute },
-    { type: "ثانیه", value: sec },
+    { type: "روز", value: days },
+    { type: "ساعت", value: hours },
+    { type: "دقیقه", value: minutes },
+    { type: "ثانیه", value: seconds },
   ];
 
   return (
@@ -135,11 +138,10 @@ export default function HeroCarousel() {
                   else if (info.offset.x < -100) nextSlide();
                 }}
               >
-                <Image
+                <img
                   src={slides[0].image}
                   alt={slides[0].title}
                   className="w-full h-full object-cover rounded"
-                  priority
                 />
                 <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 bg-white p-2 md:p-4 shadow rounded">
                   <p className="text-xs md:text-sm">
@@ -160,11 +162,10 @@ export default function HeroCarousel() {
                 key={slide.id}
                 className="w-[120px] lg:w-[180px] h-[160px] lg:h-[250px] opacity-60 duration-300"
               >
-                <Image
+                <img
                   src={slide.image}
                   alt={slide.title}
                   className="w-full h-full object-cover rounded"
-                  priority
                 />
               </div>
             ))}
