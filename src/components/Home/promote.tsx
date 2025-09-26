@@ -9,10 +9,10 @@ export default function Hero() {
         {/* Left Image */}
         <div className="hidden relative w-full h-[300px] md:h-[730px] rounded-lg overflow-hidden bg-[#E0E0E0] md:flex items-end justify-center">
           <Image
-            src="/images/hero-r.png"
+            src="/assets/promote/man2.png"
             alt="Left Model"
-            width={250}
-            height={500}
+            width={400}
+            height={600}
             className="object-contain object-bottom scale-90 md:scale-100"
           />
         </div>
@@ -22,7 +22,7 @@ export default function Hero() {
           {/* Top Image */}
           <div className="relative w-full max-w-[370px] h-[120px] md:h-[150px] rounded-lg overflow-hidden bg-[#E0E0E0]">
             <Image
-              src="/images/hero-t.png"
+              src="/assets/promote/grouptop.png"
               alt="Top Models"
               fill
               className="object-cover"
@@ -51,7 +51,7 @@ export default function Hero() {
           {/* Bottom Image */}
           <div className="relative w-full max-w-[370px] h-[120px] md:h-[150px] rounded-lg overflow-hidden bg-[#E0E0E0]">
             <Image
-              src="/images/hero-b.png"
+              src="/assets/promote/groupbot.png"
               alt="Bottom Models"
               fill
               className="object-cover"
@@ -62,7 +62,7 @@ export default function Hero() {
         {/* Right Image */}
         <div className="hidden  relative w-full h-[300px] md:h-[730px] rounded-lg overflow-hidden bg-[#E0E0E0] md:flex items-end justify-center">
           <Image
-            src="/images/hero-l.png"
+            src="/assets/promote/man.png"
             alt="Right Model"
             fill
             className="object-contain object-bottom scale-90 md:scale-100"

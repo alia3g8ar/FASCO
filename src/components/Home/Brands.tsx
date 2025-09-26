@@ -2,11 +2,11 @@ import Image from "next/image";
 
 export default function Brands() {
   const brands = [
-    { name: "CHANEL", src: "/images/brands/chanel.png" },
-    { name: "LOUIS VUITTON", src: "/images/brands/louis-vuitton.png" },
-    { name: "PRADA", src: "/images/brands/prada.png" },
-    { name: "Calvin Klein", src: "/images/brands/calvin-klein.png" },
-    { name: "DENIM", src: "/images/brands/denim.png" },
+    { name: "CHANEL", src: "/assets/logo/chanel.png" },
+    { name: "LOUIS VUITTON", src: "/assets/logo/louis_vuitton.png" },
+    { name: "PRADA", src: "/assets/logo/prada.png" },
+    { name: "Calvin Klein", src: "/assets/logo/calvin_klein.png" },
+    { name: "DENIM", src: "/assets/logo/denim.png" },
   ];
 
   return (

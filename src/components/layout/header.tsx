@@ -2,8 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Search, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { navMenu } from "@/composables/navMenu";
 
-import { navMenu } from "../../composables/navMenu";
 
 export default function MainHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
