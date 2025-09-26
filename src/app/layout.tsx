@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ClientProvider from "../../components/ClientOnly";
+import ClientProvider from "../components/ClientOnly";
 
 const myFont = localFont({
   src: [
