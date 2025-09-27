@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
-// استفاده از تصاویر از پوشه public
+// تصاویر از public
 const w1 = "/assets/deals/w1.png";
 const w2 = "/assets/deals/w2.png";
 const w3 = "/assets/deals/w3.png";
@@ -44,15 +44,8 @@ export default function HeroCarousel() {
   };
 
   const variants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 300 : -300,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.4 },
-    },
+    enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
+    center: { x: 0, opacity: 1, transition: { duration: 0.4 } },
     exit: (dir: number) => ({
       x: dir > 0 ? -300 : 300,
       opacity: 0,
@@ -99,7 +92,7 @@ export default function HeroCarousel() {
       ]);
     };
 
-    updateCounter(); // اجرای فوری
+    updateCounter();
     const interval = setInterval(updateCounter, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -107,9 +100,9 @@ export default function HeroCarousel() {
   return (
     <div
       dir="rtl"
-      className="flex flex-col md:flex-row w-full gap-4 my-10 bg-gradient-to-r from-[#ededed] via-orange-100 to-pink-100 py-6 px-4 md:px-10"
+      className="flex flex-col md:flex-row w-full gap-4 my-10 py-6 px-4 md:px-10"
     >
-      {/* سمت چپ: متن و شمارنده */}
+      {/* متن سمت چپ */}
       <div className="w-full md:w-4/10 flex flex-col items-center md:items-start">
         <h1 className="font-volkhov text-[#484848] text-2xl md:text-3xl lg:text-4xl">
           تخفیف‌های ماه
@@ -138,53 +131,15 @@ export default function HeroCarousel() {
         </div>
       </div>
 
-      {/* سمت راست: کاروسل */}
-      <div className="w-full md:w-6/10 flex flex-col items-center justify-center md:items-end mt-6 md:mt-0">
-        <div className="relative w-full max-w-[900px] h-[300px] md:h-[350px] lg:h-[400px]">
-          {/* تصویر اصلی */}
-          <div className="absolute  left-0 top-0 w-full max-w-[300px] md:max-w-[300px] h-full overflow-hidden md:mx-0 text-black">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={slides[0].id}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="w-full h-full"
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(e, info) => {
-                  if (info.offset.x > 100) prevSlide();
-                  else if (info.offset.x < -100) nextSlide();
-                }}
-              >
-                <Image
-                  src={slides[0].image}
-                  alt={slides[0].title}
-                  width={300}
-                  height={400}
-                  className="w-full h-full object-cover rounded"
-                  priority
-                />
-                <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 bg-white p-2 md:p-4 shadow rounded">
-                  <p className="text-xs md:text-sm">
-                    0{slides[0].id} — {slides[0].title}
-                  </p>
-                  <h2 className="text-lg md:text-2xl font-semibold ">
-                    {slides[0].discount}
-                  </h2>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* تصاویر کوچک: ریسپانسیو مثل نسخه قبلی */}
-          <div className=" sm:flex flex-col mx-auto lg:flex-row gap-2 lg:gap-4 absolute left-[320px] top-0">
+      {/* کاروسل سمت راست */}
+      <div className="w-full md:w-6/10 flex flex-col items-center justify-center mt-6 md:mt-0 text-black">
+        <div className="relative w-full max-w-[900px] h-[300px] md:h-[350px] lg:h-[450px] flex">
+          {/* تصاویر کوچک (الان سمت چپ) */}
+          <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 w-[40%] justify-center items-center">
             {slides.slice(1).map((slide) => (
               <div
                 key={slide.id}
-                className="w-[120px] lg:w-[180px] h-[160px] lg:h-[250px] opacity-60 duration-300"
+                className="w-[120px] lg:w-[180px] h-[160px] lg:h-[250px] opacity-60 hover:opacity-100 transition duration-300"
               >
                 <Image
                   src={slide.image}
@@ -196,22 +151,53 @@ export default function HeroCarousel() {
               </div>
             ))}
           </div>
-        </div>
 
-        {/* دکمه Prev/Next: ریسپانسیو */}
-        <div className="flex mx-auto gap-2 md:gap-4 mt-4">
-          <button
-            onClick={prevSlide}
-            className="bg-white text-black rounded-full p-2 md:p-3 shadow hover:bg-gray-100 cursor-pointer"
-          >
-            <ChevronRight size={20} />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="bg-white text-black rounded-full p-2 md:p-3 shadow hover:bg-gray-100 cursor-pointer"
-          >
-            <ChevronLeft size={20} />
-          </button>
+          {/* دکمه‌ها وسط بین تصاویر */}
+          <div className="flex flex-col justify-center items-center px-2">
+            <button
+              onClick={prevSlide}
+              className="bg-white text-black rounded-full p-2 shadow hover:bg-gray-100 mb-4"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="bg-white text-black rounded-full p-2 shadow hover:bg-gray-100"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          {/* تصویر اصلی (الان سمت راست) */}
+          <div className="relative w-[60%] h-full overflow-hidden rounded shadow">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={slides[0].id}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full h-full"
+              >
+                <Image
+                  src={slides[0].image}
+                  alt={slides[0].title}
+                  fill
+                  className="object-cove"
+                  priority
+                />
+                <div className="absolute bottom-4 left-4 bg-white p-3 md:p-4 shadow rounded">
+                  <p className="text-xs md:text-sm">
+                    0{slides[0].id} — {slides[0].title}
+                  </p>
+                  <h2 className="text-lg md:text-2xl font-semibold">
+                    {slides[0].discount}
+                  </h2>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>

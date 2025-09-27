@@ -10,7 +10,7 @@ export default function Brands() {
   ];
 
   return (
-    <section className="w-full py-6 bg-white">
+    <section className="w-full py-14 bg-white">
       <div className="container mx-auto flex flex-wrap items-center justify-center gap-16">
         {brands.map((brand) => (
           <div key={brand.name} className=" flex items-center justify-center">
