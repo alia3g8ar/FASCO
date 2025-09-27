@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 // استفاده از تصاویر از پوشه public
 const w1 = "/assets/deals/w1.png";
@@ -59,40 +60,49 @@ export default function HeroCarousel() {
     }),
   };
 
+  const [counter, setCounter] = useState([
+    { type: "روز", value: 0 },
+    { type: "ساعت", value: 0 },
+    { type: "دقیقه", value: 0 },
+    { type: "ثانیه", value: 0 },
+  ]);
+
   useEffect(() => {
-    const interval = setInterval(() => {}, 1000);
+    const updateCounter = () => {
+      const now = new Date();
+      const endOfMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        0,
+        23,
+        59,
+        59
+      );
+      const timeDiff = endOfMonth.getTime() - now.getTime();
+
+      const days = Math.max(0, Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
+      const hours = Math.max(
+        0,
+        Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      const minutes = Math.max(
+        0,
+        Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60))
+      );
+      const seconds = Math.max(0, Math.floor((timeDiff % (1000 * 60)) / 1000));
+
+      setCounter([
+        { type: "روز", value: days },
+        { type: "ساعت", value: hours },
+        { type: "دقیقه", value: minutes },
+        { type: "ثانیه", value: seconds },
+      ]);
+    };
+
+    updateCounter(); // اجرای فوری
+    const interval = setInterval(updateCounter, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // محاسبه شمارش معکوس تا پایان ماه
-  const now = new Date();
-  const endOfMonth = new Date(
-    now.getFullYear(),
-    now.getMonth() + 1,
-    0,
-    23,
-    59,
-    59
-  );
-  const timeDiff = endOfMonth.getTime() - now.getTime();
-
-  const days = Math.max(0, Math.floor(timeDiff / (1000 * 60 * 60 * 24)));
-  const hours = Math.max(
-    0,
-    Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  );
-  const minutes = Math.max(
-    0,
-    Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60))
-  );
-  const seconds = Math.max(0, Math.floor((timeDiff % (1000 * 60)) / 1000));
-
-  const counter = [
-    { type: "روز", value: days },
-    { type: "ساعت", value: hours },
-    { type: "دقیقه", value: minutes },
-    { type: "ثانیه", value: seconds },
-  ];
 
   return (
     <div
@@ -149,10 +159,13 @@ export default function HeroCarousel() {
                   else if (info.offset.x < -100) nextSlide();
                 }}
               >
-                <img
+                <Image
                   src={slides[0].image}
                   alt={slides[0].title}
+                  width={300}
+                  height={400}
                   className="w-full h-full object-cover rounded"
+                  priority
                 />
                 <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 bg-white p-2 md:p-4 shadow rounded">
                   <p className="text-xs md:text-sm">
@@ -173,9 +186,11 @@ export default function HeroCarousel() {
                 key={slide.id}
                 className="w-[120px] lg:w-[180px] h-[160px] lg:h-[250px] opacity-60 duration-300"
               >
-                <img
+                <Image
                   src={slide.image}
                   alt={slide.title}
+                  width={180}
+                  height={250}
                   className="w-full h-full object-cover rounded"
                 />
               </div>
